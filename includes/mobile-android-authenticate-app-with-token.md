@@ -36,13 +36,13 @@ The previous example showed a standard sign-in, which requires the client to con
 4. In the ToDoActivity.java file, add the the following definition for the `loadUserTokenCache` method.
 
     	private boolean loadUserTokenCache(MobileServiceClient client)
-	    {
-	        SharedPreferences prefs = getSharedPreferences(SHAREDPREFFILE, Context.MODE_PRIVATE);
-    	    String userId = prefs.getString(USERIDPREF, "undefined"); 
-	        if (userId == "undefined")
-	            return false;
-    	    String token = prefs.getString(TOKENPREF, "undefined"); 
-    	    if (token == "undefined")
+	{
+	    SharedPreferences prefs = getSharedPreferences(SHAREDPREFFILE, Context.MODE_PRIVATE);
+    	    String userId = prefs.getString(USERIDPREF, null); 
+	    if (userId == null)
+	        return false;
+    	    String token = prefs.getString(TOKENPREF, null); 
+    	    if (token == null)
     	        return false;
         	    
     	    MobileServiceUser user = new MobileServiceUser(userId);
@@ -50,8 +50,7 @@ The previous example showed a standard sign-in, which requires the client to con
     	    client.setCurrentUser(user);
         	    
     	    return true;
-	    }
-
+	}
 
 
 5. In the *ToDoActivity.java* file, replace the `authenticate` method with the following method which uses a token cache. Change the login provider if you want to use an account other than Google.
